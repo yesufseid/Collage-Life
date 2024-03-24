@@ -42,8 +42,8 @@ export default function MediaCard() {
        {[1,2,3]?.map((h,index)=>{
         return (
         <div className='relative'>
-          <p className='absolute top-3 left-72 font-mono font-semibold' >{`${index+1}/${3}`}</p>
-          <Image src={imag} alt='photo' />
+          <p className='absolute top-3 left-[350px] font-mono font-light text-sm text-white bg-stone-600 rounded-lg px-2 py-1' >{`${index+1}/${3}`}</p>
+          <Image  className='h-96' src={imag} alt='photo' />
         </div>)
        })}
     </Slider>
