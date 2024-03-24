@@ -1,14 +1,19 @@
 "use client"
-
 import { FaImage } from "react-icons/fa6";
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
-import { useState } from "react";
+import { useState,useEffect } from "react";
+import GETData from "@/app/Api";
 
 
 const options = ['days', 'graguation'];
 export default function page() {
   const [value, setValue] =useState(options[1]);
+  useEffect(()=>{
+    GETData()
+  },[])
+ 
+
   return (
     <div className=" md:mx-auto mt-20 md:w-[800px] mx-3 md:h-96 h-full md:border-2 md:border-t-8 border-green-400 rounded-t-2xl grid md:grid-cols-2 ">
            <div className="w-80 md:h-full h-80 rounded-md flex flex-col justify-center items-center ">
