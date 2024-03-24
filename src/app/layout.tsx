@@ -15,12 +15,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <div>
+      <body>
         <AppRouterCacheProvider>
-        {/* <Navbar /> */}
+        <Navbar />
         {children}
         </AppRouterCacheProvider>
-        </div>
+      </body>
     </html>
   )
 }
