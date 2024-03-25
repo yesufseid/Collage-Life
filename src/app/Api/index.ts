@@ -16,14 +16,8 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-initializeApp(firebaseConfig);
-const db=getFirestore()
-const colRef=collection(db,'CUser')
-
-export default function GETData(){
-  console.log("sdfgh");
-  
-  getDoc(colRef).then((p)=>console.log(p))
-}
+const app=initializeApp(firebaseConfig);
+const db=getFirestore(app)
+export default db
 
 

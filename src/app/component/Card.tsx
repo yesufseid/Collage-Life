@@ -6,13 +6,16 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import imag from "../../../public/1.jpg"
 import Image from 'next/image';
-import { createTheme } from '@mui/material';
+import { CardActionAreaClassKey, createTheme } from '@mui/material';
 import { CiHeart } from "react-icons/ci";
 import { BiLike } from "react-icons/bi";
 import { PiShareFatLight } from "react-icons/pi";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
+import { useState,useEffect } from "react";
+import db from "../firebase-config"
+import {collection, getDocs} from "firebase/firestore"
  
 var settings = {
   dots:false,
@@ -31,15 +34,42 @@ const theme=createTheme({
   }
 })
 
-export default function MediaCard() {
+
+type CardProps ={
+  name?:string
+  bache?:number
+  types?:"days"|"graduation"
+  date?:number
+  quate?:string
+  department?:string
+}
+
+export default function MediaCard({name,bache,types,date,quate,department}:CardProps) {
+  const cool=collection(db,"Images")
+  const [data,setData]=useState([{}])
+
+  useEffect(()=>{
+    const getData=async()=>{
+        const res=await getDocs(cool)
+        const data=res.docs.map((doc)=>({...doc.data(),id:doc.id}))
+        setData(data)
+        console.log(data);
+        
+    }
+    getData()
+  },[])
+
+
+
+
   return (
     <Card sx={{boxShadow: 0 , width:'100%'}}>
       <Typography gutterBottom variant="h6" component="div" sx={{my:0, ml:2}}>
-          name
+          {name}
         </Typography>
        <div>
        <Slider {...settings}>
-       {[1,2,3]?.map((h,index)=>{
+       {data?.map((h,index)=>{
         return (
         <div className='relative'>
           <p className='absolute top-3 left-[350px] font-mono font-light text-sm text-white bg-stone-600 rounded-lg px-2 py-1' >{`${index+1}/${3}`}</p>
@@ -60,7 +90,7 @@ export default function MediaCard() {
       </CardActions>
       <CardContent sx={{m:0,p:0}} >
       <Typography gutterBottom  component="div" sx={{my:0,ml:2}}>
-          name this is graet
+          {quate}
         </Typography>
       </CardContent>
     </Card>

@@ -3,17 +3,26 @@ import { FaImage } from "react-icons/fa6";
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import { useState,useEffect } from "react";
-import GETData from "@/app/Api";
+import db from "../../firebase-config"
+import {collection, getDocs} from "firebase/firestore"
 
 
 const options = ['days', 'graguation'];
 export default function page() {
+  const cool=collection(db,"Post")
   const [value, setValue] =useState(options[1]);
+  const [user,setUser]=useState([{}])
   useEffect(()=>{
-    GETData()
+    const getData=async()=>{
+        const res=await getDocs(cool)
+        const data=res.docs.map((doc)=>({...doc.data(),id:doc.id}))
+        setUser(data)    
+    }
+    getData()
   },[])
  
-
+  console.log(user);
+  
   return (
     <div className=" md:mx-auto mt-20 md:w-[800px] mx-3 md:h-96 h-full md:border-2 md:border-t-8 border-green-400 rounded-t-2xl grid md:grid-cols-2 ">
            <div className="w-80 md:h-full h-80 rounded-md flex flex-col justify-center items-center ">
