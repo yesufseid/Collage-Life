@@ -2,7 +2,7 @@
 import { FaImage } from "react-icons/fa6";
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
-import { useState,useEffect } from "react";
+import { useState} from "react";
 import db from "../../firebase-config"
 import {collection,addDoc,Timestamp} from "firebase/firestore"
 import { useForm } from "react-hook-form";
@@ -16,20 +16,17 @@ import Card from "./Card"
 
 
 const options = ['days', 'graguation'];
-export default function page() {
+export default function Page() {
   const colpost=collection(db,"Post")
-  const colimg=collection(db,"Images")
   const [value, setValue] =useState(options[1]);
-  const [image,setimage]=useState<any>([])
+  const [image,setImage]=useState<any>([])
   const [data,setData]=useState()
 
   const fileUplode=async(e:any)=>{
     const file=e.target.files
-    const datas=Object.values(file)
-
    for(let i=0 ;i<file.length;i++ ){
     const data=await ConvertToBase64(file[i])
-      setimage((prev:[])=>[...prev,data])
+      setImage((prev:[])=>[...prev,data])
     }      
 }
   const schema = yup.object().shape({
@@ -102,7 +99,7 @@ export default function page() {
         value={value}
         id="controllable-states-demo"
         options={options}
-        renderInput={(params) => <TextField {...params} label=""    {...register("type")}  />}
+        renderInput={(params) => <TextField {...params} label=""   onChange={(e)=>setValue(e.target.value)}   {...register("type")}  />}
         fullWidth={true}
         sx={{
           color: 'success.dark',

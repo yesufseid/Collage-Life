@@ -1,6 +1,5 @@
 "use client"
 
-import AutoComplete from "./component/AutoComplet"
 import Card from "./component/Card"
 import { useState,useEffect } from "react";
 import db from "./firebase-config"
@@ -29,8 +28,8 @@ export default function Home() {
         {/* <AutoComplete /> */}
         </div>
         <div className="grid md:grid-cols-3 md:mx-10 my-10 justify-center md:w-fit  w-full md:gap-10">
-        {posts?.map((p:any)=>{ 
-          return <Card  post={p} />
+        {posts?.map((p:any,index)=>{ 
+          return <Card  key={index} post={p} />
         })}
         </div>
     </main>

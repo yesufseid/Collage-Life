@@ -78,7 +78,7 @@ export default function MediaCard({post}:CardProps) {
        <Slider {...settings}>
        {post.img?.map((h,index)=>{
         return (
-        <div className='relative'>
+        <div key={index} className='relative'>
           <p className='absolute top-3 left-[350px] font-mono font-light text-sm text-white bg-stone-600 rounded-lg px-2 py-1' >{`${index+1}/${3}`}</p>
           <Image  className='  md:96 h-[500px] blur-none brightness-100 contrast-100 saturate-100' width={400} height={400} src={h} alt='photo' />
         </div>)
