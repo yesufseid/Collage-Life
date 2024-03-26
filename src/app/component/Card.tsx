@@ -5,7 +5,7 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import Image from 'next/image';
-import { CardActionAreaClassKey, createTheme } from '@mui/material';
+import {createTheme } from '@mui/material';
 import { CiHeart } from "react-icons/ci";
 import { BiLike } from "react-icons/bi";
 import { PiShareFatLight } from "react-icons/pi";
@@ -49,7 +49,7 @@ type postProps={
 type CardProps ={
  post:postProps
 }
-
+export const dynamic = 'force-dynamic'
 export default function MediaCard({post}:CardProps) {
   const cool=collection(db,"Images")
   const [data,setData]=useState([{}])
