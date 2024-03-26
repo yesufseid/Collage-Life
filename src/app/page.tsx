@@ -7,25 +7,17 @@ import db from "./firebase-config"
 import {collection, getDocs} from "firebase/firestore"
 
 
-type CardProps ={
-  img?:string
-  name?:string
-  bache?:number
-  types?:"days"|"graduation"
-  date?:number
-  quate?:string
-  department?:string
-}
+
+
 export default function Home() {
-  const cool=collection(db,"Post")
-  const [posts,setPost]=useState([{}])
+  const colpost=collection(db,"Post")
+  const [posts,setPost]=useState<any>()
 
   useEffect(()=>{
     const getData=async()=>{
-        const res=await getDocs(cool)
+        const res=await getDocs(colpost)
         const data=res.docs.map((doc)=>({...doc.data(),id:doc.id}))
-        setPost(data)  
-          
+        setPost(data)      
     }
     getData()
   },[])
@@ -37,8 +29,8 @@ export default function Home() {
         {/* <AutoComplete /> */}
         </div>
         <div className="grid md:grid-cols-3 md:mx-10 my-10 justify-center md:w-fit  w-full md:gap-10">
-        {posts?.map((post:CardProps)=>{
-          return <Card  name={post.name}  quate={post.quate} bache={post.bache} department={post.department} date={post.date} />
+        {posts?.map((p:any)=>{ 
+          return <Card  post={p} />
         })}
         </div>
     </main>
