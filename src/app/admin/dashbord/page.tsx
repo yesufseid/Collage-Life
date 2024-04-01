@@ -4,7 +4,7 @@ import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import { useState} from "react";
 import db from "../../firebase-config"
-import {collection,addDoc,Timestamp} from "firebase/firestore"
+import {doc,setDoc,Timestamp,collection} from "firebase/firestore"
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -17,7 +17,7 @@ import Card from "./Card"
 
 const options = ['days', 'graguation'];
 export default function Page() {
-  const colpost=collection(db,"Post")
+  const colpost=doc(collection(db, "Post"));
   const [value, setValue] =useState(options[1]);
   const [image,setImage]=useState<any>([])
   const [data,setData]=useState()
@@ -42,7 +42,12 @@ export default function Page() {
     const addData=async()=>{
         try {
           if(data){
-            const res =await  addDoc(colpost,{img:image,createdAt:Timestamp.now(),data})
+            console.log(data);
+            const res =await setDoc(colpost,{img:image,createdAt:Timestamp.now(),data})
+            // const res =await getDocs(colpost)
+            // const datas=res.docs.map((doc)=>({...doc.data(),id:doc.id})) 
+            console.log(res);
+            
           }  
         } catch (error) {
           console.log(error);

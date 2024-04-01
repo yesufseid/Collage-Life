@@ -49,7 +49,7 @@ type postProps={
 type CardProps ={
  post:postProps
 }
-export const dynamic = 'force-dynamic'
+
 export default function MediaCard({post}:CardProps) {
   const cool=collection(db,"Images")
   const [data,setData]=useState([{}])

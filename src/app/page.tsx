@@ -2,23 +2,23 @@
 
 import Card from "./component/Card"
 import { useState,useEffect } from "react";
-import db from "./firebase-config"
-import {collection, getDocs} from "firebase/firestore"
 
+// import {collection, getDocs} from "firebase/firestore"
+import {GETdocuments} from "./lib/action";
 
-export const dynamic ='force-dynamic'
 
 export default function Home() {
-  const colpost=collection(db,"Post")
+  // const colpost=collection(db,"Post")
   const [posts,setPost]=useState<any>()
 
   useEffect(()=>{
-    const getData=async()=>{
-        const res=await getDocs(colpost)
-        const data=res.docs.map((doc)=>({...doc.data(),id:doc.id}))
-        setPost(data)      
-    }
-    getData()
+    console.log("client");
+    
+      const handle=async()=>{
+      const res=await GETdocuments()
+      setPost(JSON.parse(res))
+      }
+      handle()
   },[])
   return (
     <main>
