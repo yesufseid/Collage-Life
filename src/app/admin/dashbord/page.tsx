@@ -4,23 +4,24 @@ import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import { useState} from "react";
 import db from "../../firebase-config"
-import {doc,setDoc,Timestamp,collection} from "firebase/firestore"
+import {doc,addDoc,Timestamp,collection,getDocs} from "firebase/firestore"
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Card from "./Card"
+import {Createdocuments} from "@/app/lib/action"
 
 
 
 
 const options = ['days', 'graguation'];
 export default function Page() {
-  const colpost=doc(collection(db, "Post"));
   const [value, setValue] =useState(options[1]);
   const [image,setImage]=useState<any>([])
   const [data,setData]=useState()
+  const [loadig,setLoading]=useState(false)
 
   const fileUplode=async(e:any)=>{
     const file=e.target.files
@@ -40,19 +41,21 @@ export default function Page() {
   const {register,handleSubmit,formState: { errors }, reset} = useForm({resolver: yupResolver(schema),});
 
     const addData=async()=>{
+      if(!data) null
+      setLoading(true)
         try {
-          if(data){
-            console.log(data);
-            const res =await setDoc(colpost,{img:image,createdAt:Timestamp.now(),data})
-            // const res =await getDocs(colpost)
-            // const datas=res.docs.map((doc)=>({...doc.data(),id:doc.id})) 
-            console.log(res);
-            
-          }  
+           const file ={img:image,createdAt:Timestamp.now(),data}
+           const datas=JSON.stringify(file)
+            const ress =await Createdocuments(datas)
+            setLoading(false)
+            reset()
+            setImage([])
+            // const datas=res.docs.map((doc)=>({...doc.data(),id:doc.id}))  
+         
         } catch (error) {
           console.log(error);
           
-        }  
+        } 
     }
     
   
@@ -64,11 +67,11 @@ export default function Page() {
   
   return (
     
-       <div className=" md:mx-auto mt-20 md:w-[800px] mx-3 md:h-auto h-auto md:border-2 md:border-t-8 border-green-400 rounded-t-2xl grid md:grid-cols-2 "> 
+       <div className=" md:mx-auto mt-10 md:w-[800px] mx-3 md:h-auto h-auto md:border-2 md:border-t-8 border-green-400 rounded-t-2xl grid md:grid-cols-2 "> 
            <div className="w-80 md:h-full h-80 rounded-md flex flex-col justify-center items-center ml-3">
            {image.length!==0?<Card url={image} />:(
           <>
-           <label htmlFor="files"> <FaImage className="h-20 w-20 text-green-600" /></label>
+           <label htmlFor="files"> <FaImage className="h-20 cursor-pointer w-20 text-green-600" /></label>
            <input 
             onChange={e=>fileUplode(e)}
            type="file" id="files" name="files" multiple className="invisible" />
@@ -80,23 +83,23 @@ export default function Page() {
            <TextField
           required
           id="outlined-required"
-          label="Required"
-          defaultValue="name " 
+          label="name"
+          defaultValue="" 
           autoComplete="false" 
           {...register("name")}
            />
             <TextField
           required
           id="outlined-required"
-          label="Required"
-          defaultValue="bache" 
+          label="bache"
+          defaultValue="" 
           {...register("bache")}
            />
           <TextField
           required
           id="outlined-required"
-          label="Required"
-          defaultValue="department"
+          label="department"
+          defaultValue=""
           {...register("department")} 
            />
         <div className="w-40">
@@ -104,7 +107,7 @@ export default function Page() {
         value={value}
         id="controllable-states-demo"
         options={options}
-        renderInput={(params) => <TextField {...params} label=""   onChange={(e)=>setValue(e.target.value)}   {...register("type")}  />}
+        renderInput={(params) => <TextField {...params} label=""   onChange={(e)=>console.log(e.target.value)}   {...register("type")}  />}
         fullWidth={true}
         sx={{
           color: 'success.dark',
@@ -115,13 +118,14 @@ export default function Page() {
           <TextField
           required
           id="outlined-required"
-          defaultValue="quate" 
+          defaultValue="" 
+          placeholder="quate"
           multiline
           rows={4}
           {...register("quate")} 
            />
            )}
-           <button disabled={image.length===0} className="py-1 px-2 border-2 border-green-600 rounded-lg mb-3 hover:bg-green-600" type="submit">Save</button>
+           <button disabled={image.length===0||loadig} className="py-1 px-2 border-2 border-green-600 rounded-lg mb-3 hover:bg-green-600" type="submit">Save</button>
            </div>
            </form>
     </div>

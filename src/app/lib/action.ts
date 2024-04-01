@@ -16,13 +16,11 @@ const GETdocuments=async()=>{
     }
 }
 const Createdocuments=async(data:string)=>{
-    console.log("sevver");
-    
     try {
    const colpost=collection(db,"Post")
     const res=await addDoc(colpost,JSON.parse(data))
     console.log(res);
-    return  res
+    return  true
     } catch (error) {
        throw new Error(error)  
     }

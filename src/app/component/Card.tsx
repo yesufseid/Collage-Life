@@ -8,16 +8,16 @@ import Image from 'next/image';
 import {createTheme } from '@mui/material';
 import { CiHeart } from "react-icons/ci";
 import { BiLike } from "react-icons/bi";
-import { PiShareFatLight } from "react-icons/pi";
+import { RiAccountCircleLine } from "react-icons/ri";
+import { FiSend } from "react-icons/fi";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import { useState,useEffect } from "react";
-import db from "../firebase-config"
-import {collection, getDocs} from "firebase/firestore"
+
  
 var settings = {
-  dots:false,
+  dots:true,
   infinite:false,
   speed: 500,
   slidesToShow: 1,
@@ -51,20 +51,15 @@ type CardProps ={
 }
 
 export default function MediaCard({post}:CardProps) {
-  const cool=collection(db,"Images")
-  const [data,setData]=useState([{}])
-    console.log(post);
-    
-  useEffect(()=>{
-    const getData=async()=>{
-        const res=await getDocs(cool)
-        const data=res.docs.map((doc)=>({...doc.data(),id:doc.id}))
-        setData(data)
-        console.log(data);
-        
-    }
-    getData()
-  },[])
+  // const [post,setPost]=useState<any>()
+
+  // useEffect(()=>{
+  //     const handle=async()=>{
+  //     const res=await GETdocuments()
+  //     setPost(JSON.parse(res))
+  //     }
+  //     handle()
+  // },[])
 
 
 
@@ -72,15 +67,16 @@ export default function MediaCard({post}:CardProps) {
   return (
     <Card sx={{boxShadow: 0 , width:'100%'}}>
        <Typography gutterBottom variant="h6" component="div" sx={{my:0, ml:2}}>
-          {post.data.name}
+       <RiAccountCircleLine  className='text-2xl cursor-pointer hover:scale-105 w-10 h-10 inline border-2
+        border-pink-600 rounded-full '  />  {post.data.name}
         </Typography>
        <div>
        <Slider {...settings}>
        {post.img?.map((h,index)=>{
         return (
-        <div key={index} className='relative'>
-          <p className='absolute top-3 left-[350px] font-mono font-light text-sm text-white bg-stone-600 rounded-lg px-2 py-1' >{`${index+1}/${3}`}</p>
-          <Image  className='  md:96 h-[500px] blur-none brightness-100 contrast-100 saturate-100' width={400} height={400} src={h} alt='photo' />
+        <div key={index}>
+          <Image  className='  md:96 h-[500px] blur-none brightness-100 contrast-100
+           saturate-100' width={400} height={400} src={h} alt='photo' />
         </div>)
        })}
     </Slider>
@@ -95,7 +91,7 @@ export default function MediaCard({post}:CardProps) {
        <BiLike  className='text-2xl  cursor-pointer hover:scale-105 w-10 h-10 text-balck' />
        <span>5</span>
        </div>
-       <PiShareFatLight className='text-2xl cursor-pointer hover:scale-105 w-10 h-10  ' />
+       <FiSend className='text-2xl cursor-pointer hover:scale-105 w-10 h-10  ' />
        
       </CardActions>
       <CardContent sx={{m:0,p:0}} >

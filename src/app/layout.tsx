@@ -16,10 +16,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
+       
         <AppRouterCacheProvider>
         <Navbar />
         {children}
         </AppRouterCacheProvider>
+       
       </body>
     </html>
   )
