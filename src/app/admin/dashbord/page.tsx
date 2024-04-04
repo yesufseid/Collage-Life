@@ -3,8 +3,7 @@ import { FaImage } from "react-icons/fa6";
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import { useState} from "react";
-import db from "../../firebase-config"
-import {doc,addDoc,Timestamp,collection,getDocs} from "firebase/firestore"
+import {Timestamp} from "firebase/firestore"
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -12,7 +11,6 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Card from "./Card"
 import {Createdocuments} from "@/app/lib/action"
-
 
 
 
@@ -39,6 +37,13 @@ export default function Page() {
   });
 
   const {register,handleSubmit,formState: { errors }, reset} = useForm({resolver: yupResolver(schema),});
+  
+const HandleReset=()=>{
+  reset()
+  setImage([])
+}
+
+
 
     const addData=async()=>{
       if(!data) null
@@ -48,12 +53,11 @@ export default function Page() {
            const datas=JSON.stringify(file)
             const ress =await Createdocuments(datas)
             setLoading(false)
-            reset()
-            setImage([])
+          HandleReset()
             // const datas=res.docs.map((doc)=>({...doc.data(),id:doc.id}))  
          
         } catch (error) {
-          console.log(error);
+          throw new Error(error)
           
         } 
     }
@@ -67,7 +71,12 @@ export default function Page() {
   
   return (
     
-       <div className=" md:mx-auto mt-10 md:w-[800px] mx-3 md:h-auto h-auto md:border-2 md:border-t-8 border-green-400 rounded-t-2xl grid md:grid-cols-2 "> 
+       <div className=" md:mx-auto mt-10 md:w-[800px] relative mx-3 md:h-auto h-auto md:border-2 md:border-t-8
+        border-green-400 rounded-t-2xl grid md:grid-cols-2 "> 
+           <button onClick={()=>HandleReset()} disabled={loadig} className={`py-2 px-3 border-2
+            rounded-lg absolute -top-14 font-serif text-xl 
+           right-4 border-green-600
+            hover:bg-pink-600`}>reset</button>
            <div className="w-80 md:h-full h-80 rounded-md flex flex-col justify-center items-center ml-3">
            {image.length!==0?<Card url={image} />:(
           <>
@@ -107,7 +116,7 @@ export default function Page() {
         value={value}
         id="controllable-states-demo"
         options={options}
-        renderInput={(params) => <TextField {...params} label=""   onChange={(e)=>console.log(e.target.value)}   {...register("type")}  />}
+        renderInput={(params) => <TextField {...params} label="" onChange={()=>console.log("bnm")}  {...register("type")}  />}
         fullWidth={true}
         sx={{
           color: 'success.dark',
@@ -116,7 +125,6 @@ export default function Page() {
     </div>
     {value==="graguation"&&(
           <TextField
-          required
           id="outlined-required"
           defaultValue="" 
           placeholder="quate"
@@ -125,7 +133,8 @@ export default function Page() {
           {...register("quate")} 
            />
            )}
-           <button disabled={image.length===0||loadig} className="py-1 px-2 border-2 border-green-600 rounded-lg mb-3 hover:bg-green-600" type="submit">Save</button>
+           <button disabled={image.length===0||loadig} 
+           className="py-1 px-2 border-2 border-green-600 rounded-lg mb-3 hover:bg-green-600" type="submit">Save</button>
            </div>
            </form>
     </div>

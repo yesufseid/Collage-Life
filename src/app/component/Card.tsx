@@ -66,7 +66,7 @@ export default function MediaCard({post}:CardProps) {
 
   return (
     <Card sx={{boxShadow: 0 , width:'100%'}}>
-       <Typography gutterBottom variant="h6" component="div" sx={{my:0, ml:2}}>
+       <Typography gutterBottom variant="h6" component="div" sx={{my:0, ml:2, mb:2}}>
        <RiAccountCircleLine  className='text-2xl cursor-pointer hover:scale-105 w-10 h-10 inline border-2
         border-pink-600 rounded-full '  />  {post.data.name}
         </Typography>
