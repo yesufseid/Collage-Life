@@ -10,6 +10,7 @@ import { BiLike } from "react-icons/bi";
 import { FiSend } from "react-icons/fi";
 import CardActions from '@mui/material/CardActions';
 import { RiAccountCircleLine } from "react-icons/ri";
+import BottomNavbar  from './component/BottomNavbar';
 
 function Media() {
 
@@ -61,6 +62,7 @@ export default function Facebook() {
     <div>
       <Media />
       <Media />
+      <BottomNavbar />
     </div>
   );
 }

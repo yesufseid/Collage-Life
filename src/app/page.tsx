@@ -4,6 +4,7 @@ import Card from "./component/Card"
 import { useState,useEffect } from "react";
 import Loading from "./loading"
 import Error from"./error"
+import BottomNavbar from "./component/BottomNavbar";
 
 // import {collection, getDocs} from "firebase/firestore"
 import {GETdocuments} from "./lib/action";
@@ -13,6 +14,7 @@ export default function Home() {
   // const colpost=collection(db,"Post")
   const [posts,setPost]=useState<any>()
   const [loading,setLoading]=useState(true)
+  const [show,setShow]=useState<"Home"|"Search">("Home")
 
   useEffect(()=>{
       const handle=async()=>{
@@ -33,6 +35,7 @@ export default function Home() {
         })
 
       }
+      <BottomNavbar setShow={setShow} show={show} />
         </div>
   );
 }
