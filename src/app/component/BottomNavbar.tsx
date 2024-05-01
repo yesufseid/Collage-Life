@@ -14,9 +14,9 @@ export default function BottomNavbar({setShow,show}:Props) {
     <div className="flex justify-center gap-16 py-1 w-full border-t-2 rounded-t-md border-stone-800  bg-stone-950 fixed bottom-0 md:w-[400px]">
       {show!=="Home"?
        <GoHome onClick={()=>setShow("Home")} 
-       className={`h-10 w-10 text-white`}/>:<GoHomeFill className={`h-10 w-10 text-white`} />}
+       className={`h-10 w-10 text-white cursor-pointer`}/>:<GoHomeFill className={`h-10 w-10 text-white`} />}
        {show!=="Search"?
-       <CiSearch onClick={()=>setShow("Search")} className={`w-10 h-10 text-white ` }/>:<BiSolidSearch className={`w-10 h-10 text-white ` } />}
+       <CiSearch onClick={()=>setShow("Search")} className={`w-10 h-10 text-white cursor-pointer ` }/>:<BiSolidSearch className={`w-10 h-10 text-white ` } />}
     </div>
   ) 
 }

@@ -18,7 +18,7 @@ const options = ['days', 'graguation'];
 export default function Page() {
   const [value, setValue] =useState(options[1]);
   const [image,setImage]=useState<any>([])
-  const [data,setData]=useState()
+  const [data,setData]=useState({})
   const [loadig,setLoading]=useState(false)
 
   const fileUplode=async(e:any)=>{
@@ -46,10 +46,14 @@ const HandleReset=()=>{
 
 
     const addData=async()=>{
-      if(!data) null
+      const satau={
+        like:0,
+        heart:0
+      }
+      if(!data) return null
       setLoading(true)
         try {
-           const file ={img:image,createdAt:Timestamp.now(),data}
+           const file ={img:image,createdAt:Timestamp.now(),data,status:satau}
            const datas=JSON.stringify(file)
             const ress =await Createdocuments(datas)
             setLoading(false)

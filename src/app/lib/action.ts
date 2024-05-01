@@ -3,6 +3,7 @@
 
 import db from "./index"
 import {collection, getDocs,addDoc} from "firebase/firestore"
+import { doc, updateDoc } from "firebase/firestore";
 
 
 const GETdocuments=async()=>{
@@ -21,7 +22,7 @@ const GETdocuments=async()=>{
 }
 const Createdocuments=async(data:string)=>{
     try {
-   const colpost=collection(db,"Pos")
+   const colpost=collection(db,"Post")
     const res=await addDoc(colpost,JSON.parse(data))
     return  true
     } catch (error) {
@@ -29,8 +30,18 @@ const Createdocuments=async(data:string)=>{
     }
 }
 
+const Updatedocument=async(id:string,data:{like?:number,heart?:number})=>{
+    const taskDocRef = doc(db, 'Post', id)
+    try{
+      await updateDoc(taskDocRef, {
+        data
+      })
+    } catch (err) {
+      alert(err)
+    }
+
+}
 
 
 
-
-export {Createdocuments,GETdocuments}
+export {Createdocuments,GETdocuments,Updatedocument}
