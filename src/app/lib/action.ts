@@ -30,14 +30,17 @@ const Createdocuments=async(data:string)=>{
     }
 }
 
-const Updatedocument=async(id:string,data:{like?:number,heart?:number})=>{
+const Updatedocument=async(id:string,data:{})=>{
     const taskDocRef = doc(db, 'Post', id)
+    console.log(data);
+    
     try{
-      await updateDoc(taskDocRef, {
-        data
+     const res= await updateDoc(taskDocRef, {
+        status:data
       })
+      console.log(res); 
     } catch (err) {
-      alert(err)
+      console.log(err);
     }
 
 }

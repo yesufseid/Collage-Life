@@ -3,7 +3,7 @@ import { CiHeart } from "react-icons/ci";
 import { BiLike } from "react-icons/bi";
 import { FcLike } from "react-icons/fc";
 import { AiFillLike } from "react-icons/ai";
-import { useState,useEffect } from 'react';
+import { useState,useEffect,useMemo } from 'react';
 import { Updatedocument } from '../lib/action';
 
 type CardProps={
@@ -18,40 +18,33 @@ export default function cardBottom({id,lik,hear}:CardProps) {
     const [likes,setLikes]=useState([])
     const [like,setLike]=useState(0)
 useEffect(()=>{
+  setHeart(hear)
+  setLike(lik)
  const hearts=localstorage.getItem("hearts")
  const likes= localStorage.getItem("likes")
  setHearts(JSON.parse(hearts))
  setLikes(JSON.parse(likes))
 },[])
-useEffect(()=>{
- handleupdate()
-  localstorage.setItem("hearts",JSON.stringify(hearts))
-  localstorage.setItem("likes",JSON.stringify(likes))
-},[heart,likes])
-const handleupdate=async()=>{
-  const data={
-    heart:heart,
-    like:like
-  }
+const handleupdate=async(data:{})=>{
   try {
-    const res=await Updatedocument(id,data)
-    console.log(res);
-     
+    const res=await Updatedocument(id,data)  
   } catch (error) {
     console.log(error);
     
   }
 }
-
-
-
     const handleHeart=()=>{
+        setHeart((prev)=>hearts.includes(id)?prev-1:prev+1)  
         setHearts((prev)=>prev.includes(id)?prev.filter((p)=>p!==id):[...prev,id]) 
-        setHeart((prev)=>hearts.includes(id)?prev-1:prev+1)
+        localstorage.setItem("hearts",JSON.stringify(hearts.includes(id)?hearts.filter((p)=>p!==id):[...hearts,id]))
+        handleupdate({"heart":hearts.includes(id)?heart-1:heart+1,"like":like})
   }
   const handleLike=()=>{
     setLikes((prev)=>prev.includes(id)?prev.filter((p)=>p!==id):[...prev,id]) 
     setLike((prev)=>likes.includes(id)?prev-1:prev+1)
+    localstorage.setItem("likes",JSON.stringify(likes.includes(id)?likes.filter((p)=>p!==id):[...likes,id]))
+    handleupdate({"like":likes.includes(id)?like-1:like+1,"heart":heart})
+   
   }
   return (
     <div className='flex gap-2 justify-center items-center text-black font-semibold'>

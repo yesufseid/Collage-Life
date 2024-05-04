@@ -18,7 +18,7 @@ const options = ['days', 'graguation'];
 export default function Page() {
   const [value, setValue] =useState(options[1]);
   const [image,setImage]=useState<any>([])
-  const [data,setData]=useState({})
+  // const [data,setData]=useState({})
   const [loadig,setLoading]=useState(false)
 
   const fileUplode=async(e:any)=>{
@@ -45,7 +45,7 @@ const HandleReset=()=>{
 
 
 
-    const addData=async()=>{
+    const addData=async(data:{})=>{
       const satau={
         like:0,
         heart:0
@@ -69,8 +69,8 @@ const HandleReset=()=>{
   
  
  const onSubmit=(data:any)=>{
-      setData(data) 
-      addData()
+      // setData(data) 
+      addData(data)
  }
   
   return (
