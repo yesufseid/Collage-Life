@@ -25,9 +25,11 @@ useEffect(()=>{
  setHearts(JSON.parse(hearts))
  setLikes(JSON.parse(likes))
 },[])
-const handleupdate=async(data:{})=>{
+const handleupdate=async(heart:number,like:number)=>{
+  
   try {
-    const res=await Updatedocument(id,data)  
+    const res=await Updatedocument(id,heart,like) 
+    console.log(res);  
   } catch (error) {
     console.log(error);
     
@@ -37,13 +39,13 @@ const handleupdate=async(data:{})=>{
         setHeart((prev)=>hearts.includes(id)?prev-1:prev+1)  
         setHearts((prev)=>prev.includes(id)?prev.filter((p)=>p!==id):[...prev,id]) 
         localstorage.setItem("hearts",JSON.stringify(hearts.includes(id)?hearts.filter((p)=>p!==id):[...hearts,id]))
-        handleupdate({"heart":hearts.includes(id)?heart-1:heart+1,"like":like})
+        handleupdate(hearts.includes(id)?heart-1:heart+1,like)
   }
   const handleLike=()=>{
     setLikes((prev)=>prev.includes(id)?prev.filter((p)=>p!==id):[...prev,id]) 
     setLike((prev)=>likes.includes(id)?prev-1:prev+1)
     localstorage.setItem("likes",JSON.stringify(likes.includes(id)?likes.filter((p)=>p!==id):[...likes,id]))
-    handleupdate({"like":likes.includes(id)?like-1:like+1,"heart":heart})
+    handleupdate(heart,likes.includes(id)?like-1:like+1)
    
   }
   return (
@@ -51,11 +53,11 @@ const handleupdate=async(data:{})=>{
           {hearts.includes(id)?<FcLike onClick={()=>handleHeart()}  className='text-2xl  
        cursor-pointer hover:scale-105 w-10 h-10 text-pink-800' />:<CiHeart  onClick={()=>handleHeart()}  className='text-2xl  
        cursor-pointer hover:scale-105 w-10 h-10 text-black' />}
-       <span>{heart===0?hear:heart}</span>
+       <span>{heart}</span>
         { likes.includes(id)?<AiFillLike onClick={()=>handleLike()} className='text-2xl  cursor-pointer hover:scale-105 
         w-10 h-10 text-pink-800' />:<BiLike onClick={()=>handleLike()}   className='text-2xl  cursor-pointer hover:scale-105 w-10 h-10 text-balck' />
         } 
-       <span>{like===0?lik:like}</span>
+       <span>{like}</span>
        </div>
   )
 }
