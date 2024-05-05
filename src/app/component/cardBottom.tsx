@@ -1,9 +1,10 @@
+"use client"
 import React from 'react'
 import { CiHeart } from "react-icons/ci";
 import { BiLike } from "react-icons/bi";
 import { FcLike } from "react-icons/fc";
 import { AiFillLike } from "react-icons/ai";
-import { useState,useEffect,useMemo } from 'react';
+import { useState,useEffect} from 'react';
 import { Updatedocument } from '../lib/action';
 
 type CardProps={
@@ -11,7 +12,7 @@ type CardProps={
    lik:number
    hear:number
 }
-export default function cardBottom({id,lik,hear}:CardProps) {
+export default function CardBottom({id,lik,hear}:CardProps) {
   const localstorage=window.localStorage
     const [hearts,setHearts]=useState([])
     const [heart,setHeart]=useState(0)

@@ -84,7 +84,7 @@ export default function MediaCard({post}:CardProps) {
       </CardActions>
       <CardContent sx={{m:0,p:0}} >
       <Typography gutterBottom  component="div" sx={{my:0,ml:2}}>
-          {post.data.quate}
+        <p className='font-sans'>{post.data.quate}</p>
         </Typography>
       </CardContent>
       </>
