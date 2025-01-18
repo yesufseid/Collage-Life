@@ -27,13 +27,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${roboto_init.variable} ${Poppins_init.variable}`} >
-       
-        <AppRouterCacheProvider>
+      <body >
         <Navbar />
         {children}
-        </AppRouterCacheProvider>
-       
       </body>
     </html>
   )

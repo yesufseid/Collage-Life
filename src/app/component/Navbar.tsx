@@ -1,24 +1,22 @@
 "use client"
-
-import { PiStudentThin } from "react-icons/pi";
-import Typography from '@mui/material/Typography';
+import { FaBell, FaUserCircle } from "react-icons/fa";
 import { createTheme } from '@mui/material';
 
 
-const theme=createTheme({
-  palette:{
-    primary:{
-      main:"#16a34a"
-    }
-  }
-})
 export default function Navbar() {
   return ( 
-    <div className="hero   w-full  z-10  ">
-      <div className="flex items-center md:w-[400px] gap-5 md:mx-auto ml-5  ">
-      {/* <PiStudentThin className="w-14 h-14 ml-2  text-black" />  */}
-        <p className="roboto text-3xl font-semibold text-purple-500 "> Collage Life</p> 
-        </div>     
+    <nav className="md:mx-40  bg-gray-100 shadow-md p-4 flex items-center justify-between">
+    {/* Logo Section */}
+    <div className="hero text-xl font-bold font-serif text-gray-800">
+    Collage Life
     </div>
+
+    {/* Icon Section */}
+    <div className="flex items-center space-x-6 text-gray-700 text-lg">
+      <FaBell className="cursor-pointer hover:text-gray-900" />
+      <FaUserCircle className="cursor-pointer hover:text-gray-900" />
+    </div>
+  </nav>
+    
   )
 }

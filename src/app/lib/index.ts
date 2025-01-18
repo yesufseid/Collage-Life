@@ -1,23 +1,28 @@
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getFirestore,collection,getDoc } from "firebase/firestore";
-
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
-const firebaseConfig = {
-  apiKey: "AIzaSyAEQvJtMmEc4oVTEgLa5lSueELYWvxbYrI",
-  authDomain: "collage-4003f.firebaseapp.com",
-  projectId: "collage-4003f",
-  storageBucket: "collage-4003f.appspot.com",
-  messagingSenderId: "38928903997",
-  appId: "1:38928903997:web:af1b6e8448da14ebe65f54"
-};
-
-// Initialize Firebase
-const app=initializeApp(firebaseConfig);
-const db=getFirestore(app)
-export default db
+"use server"
+import { gql, request } from 'graphql-request'
 
 
+
+const graphqlAPI="https://eu-west-2.cdn.hygraph.com/content/cm60lwbi6029j07v0ac10jr30/master"
+export const GetGraduates=async()=>{
+    const query=gql`
+    query MyQuery {
+         graduates {
+    name
+    id
+    createdAt
+    photos {
+      url
+    }
+    quate
+  }
+ }`
+ try {
+   // eslint-disable-next-line @typescript-eslint/no-explicit-any
+   const results:any=await request(graphqlAPI,query,[{name:"ስፖርት",slug:"sport"}])
+   return results.postsConnection.edges
+ } catch (error) {
+   console.log(error);
+   return {error:true} 
+ }
+}

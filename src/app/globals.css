@@ -2,9 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-body{
-    margin: 0%;
-}
 /* .hero{
     background-color: blue;
     background-image: url('../../public/1.jpg');
