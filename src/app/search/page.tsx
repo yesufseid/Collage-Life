@@ -22,7 +22,7 @@ export default function Page() {
     <div className="md:mx-40">
           <AutocompleteInput setSearchText={setSearchText}  />
           <div className="grid md:grid-cols-3 grid-cols-1 mx-2">
-          {graduates&&graduates.map((g:{name:string,photos:{url:string}[],department:{name:string}})=><Card  name={g.name} department={g.department.name} url={g.photos[0].url}  />)}
+          {graduates&&graduates.map((g:{name:string,photos:{url:string}[],department:{name:string}})=><Card key={g.name}  name={g.name} department={g.department.name} url={g.photos[0].url}  />)}
           </div>
     </div>
   )

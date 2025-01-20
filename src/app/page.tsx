@@ -24,17 +24,9 @@ export default function Page() {
     <>
     <Navbar />
     <div className="w-full md:w-96 mx-auto">
-      {[1,2,3,4,5].map(()=>(
-          (
-         <>
             {graduates&&graduates.map((p:{quate:string,name:string,photos:[]})=>{
-              return <MediaCard quate={p.quate} name={p.name} photos={p.photos} />
+              return <MediaCard key={p.name} quate={p.quate} name={p.name} photos={p.photos} />
             })}
-         </>
-         )    
-      ))}
-     
-      
     </div>
     </>
   )
