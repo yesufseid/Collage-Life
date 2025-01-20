@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Navbar from "@/app/component/Navbar";
-import { AppRouterCacheProvider } from '@mui/material-nextjs/v13-appRouter';
 import {Qwitcher_Grypen,Poppins} from "next/font/google"
+import BottomNavbar from "./component/BottomNavbar";
 
 
 const roboto_init=Qwitcher_Grypen({
@@ -28,8 +27,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body >
-        <Navbar />
         {children}
+        <BottomNavbar />
       </body>
     </html>
   )
